@@ -1,31 +1,32 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NavigationBar from "./Navigation/NavigationBar";
 import State from "./enums/State";
 import UserInput from "./UserInput/UserInput";
-import path from "path";
-import { promises } from "fs";
+import GameState, { initGameState } from "./game_state/GameState";
+import City from "./game_state/City";
+import Candy from "./enums/Candy";
 
-
-
-async function initCandies() {
-  console.log("reading users.json...");
-  // Get the path of the json file
-  const filePath = path.join(process.cwd(), "data/candies.json");
-  // Read the json file
-  const jsonData = await promises.readFile(filePath);
-  // Parse data as json
-  const users: User[] = JSON.parse(jsonData);
-
-  return users;
+interface Props {
+  candies: Candy[];
+  cities: City[];
 }
 
-const Game = () => {
-  const [activeState, setActiveState] = React.useState(State.Straße);
-  const [users, setUsers] = React.useState(initCandies());
+export default function Game({ candies, cities }: Props) {
+  const [currentCity, setCurrentCity] = useState(cities[0]);
+
+  // initGameState nur übergeben, statt initGameState() aufzurufen => zwar wird das Objekt nicht neu initialisiert, aber die Funktion wird dennoch immer wieder aufgerufen
+  // https://react.dev/reference/react/useState#avoiding-recreating-the-initial-state
+  const tmpInitFunction = initGameState({ candies, cities, currentCity });
+  const [gameState, setGameState] = React.useState<GameState>(tmpInitFunction);
+
   function handleChangeState(newState: State) {
-    setActiveState(newState);
+    // Wenn das Object verändert wird, sollte dennoch ein neues Objekt erzeugt werden, damit React das mitbekommt
+    setGameState({
+      ...gameState,
+      activeState: newState,
+    });
   }
 
   function handleBuyCandy(amount: number) {
@@ -40,19 +41,17 @@ const Game = () => {
     <>
       <div>
         <NavigationBar
-          activeState={activeState}
+          gameState={gameState}
           handleChangeState={handleChangeState}
         />
       </div>
       <div>
         <UserInput
-          activeState={activeState}
+          gameState={gameState}
           handleBuyCandy={handleBuyCandy}
           handleSellCandy={handleSellCandy}
         />
       </div>
     </>
   );
-};
-
-export default Game;
+}

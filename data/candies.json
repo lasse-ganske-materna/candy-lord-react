@@ -1,10 +1,34 @@
 [
   {
     "name": "Schokolade",
-    "price": 1.5
+    "price": 31800
   },
   {
-    "name": "Chips",
-    "price": 2.5
+    "name": "Zitronenkekse",
+    "price": 23000
+  },
+  {
+    "name": "Bertie Botts Bohnen",
+    "price": 18000
+  },
+  {
+    "name": "Lakritzschnapper",
+    "price": 10000
+  },
+  {
+    "name": "Kesselkuchen",
+    "price": 6800
+  },
+  {
+    "name": "Gummischnecke",
+    "price": 1100
+  },
+  {
+    "name": "Lebkuchenherz",
+    "price": 250
+  },
+  {
+    "name": "Center Shock",
+    "price": 30
   }
 ]

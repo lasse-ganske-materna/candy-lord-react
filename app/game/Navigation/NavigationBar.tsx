@@ -1,15 +1,16 @@
 import React, { useId } from "react";
 import NavigationButton from "./NavigationButton";
 import State from "../enums/State";
+import GameState from "../game_state/GameState";
 
 interface Props {
-  activeState: string;
+  gameState: GameState;
   handleChangeState: (newState: State) => void;
 }
 
 const NavigationBar = (props: Props) => {
   const navItems = Object.values(State).map((item) => {
-    const active = item === props.activeState;
+    const active = item === props.gameState.activeState;
     return (
       <NavigationButton
         key={item}

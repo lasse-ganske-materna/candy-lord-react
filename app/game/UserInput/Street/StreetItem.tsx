@@ -1,21 +1,20 @@
 "use client";
 
 import React from "react";
-import { Candy } from "../../enums/Candy";
+import Candy from "../../enums/Candy";
 
 interface Props {
   candy: Candy;
-  price: number;
   dialogId: string;
 }
 
-const StreetItem = ({ candy, price, dialogId }: Props) => {
+const StreetItem = ({ candy, dialogId }: Props) => {
   return (
     <button
       className="btn btn-outline btn-accent"
       onClick={() => document.getElementById(dialogId).showModal()}
     >
-      {candy} {price}
+      {candy.name + " (" + candy.price + " CC)"}
     </button>
   );
 };

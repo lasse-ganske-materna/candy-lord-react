@@ -33,7 +33,7 @@ const StreetDialog = ({
     <>
       <dialog id={dialogId} className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
-          <h3 className="font-bold text-lg text-center">{candy}</h3>
+          <h3 className="font-bold text-lg text-center">{candy.name}</h3>
           <input
             type="number"
             min={1}

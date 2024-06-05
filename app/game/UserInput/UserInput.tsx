@@ -1,28 +1,30 @@
 import React from "react";
 import State from "../enums/State";
-import { StreetInput } from "./Street/StreetInput";
-import { Candy } from "../enums/Candy";
+
 import StreetItem from "./Street/StreetItem";
 import StreetDialog from "./Street/StreetDialog";
+import GameState from "../game_state/GameState";
+
 
 interface Props {
-  activeState: State;
+  gameState: GameState;
   handleBuyCandy: (amount: number) => void;
   handleSellCandy: (amount: number) => void;
 }
 
-const UserInput = ({ activeState, handleBuyCandy, handleSellCandy }: Props) => {
-  switch (activeState) {
+const UserInput = ({ gameState, handleBuyCandy, handleSellCandy }: Props) => {
+  switch (gameState.activeState) {
     case State.Straße:
-      const streetItems = Object.values(Candy).map((candy) => {
-        const dialogId = `dialog-${candy}`;
+      const streetItems = gameState.getCurrentCandies().map((candy) => {
+        const dialogId = `dialog-${candy.name}`;
         return (
-          <div key={candy}>
-            <StreetItem candy={candy} price={60} dialogId={dialogId} />
+          <div key={candy.name}>
+            <StreetItem candy={candy} dialogId={dialogId} />
             <StreetDialog
               candy={candy}
               dialogId={dialogId}
               handleBuyCandy={handleBuyCandy}
+              handleSellCandy={handleSellCandy}
             />
           </div>
         );
