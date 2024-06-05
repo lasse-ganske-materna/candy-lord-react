@@ -1,11 +1,12 @@
 import React from "react";
-import { Candy } from "../../enums/Candy";
+import Candy from "../../enums/Candy";
+
 
 interface Props {
   candy: Candy;
   dialogId: string;
-  handleBuyCandy: (amount: number) => void;
-  handleSellCandy: (amount: number) => void;
+  handleBuyCandy: (candy: Candy, amount: number) => void;
+  handleSellCandy: (candy: Candy, amount: number) => void;
 }
 
 const StreetDialog = ({
@@ -14,7 +15,7 @@ const StreetDialog = ({
   handleBuyCandy,
   handleSellCandy,
 }: Props) => {
-  const [inputAmount, setInputAmount] = React.useState(0);
+  const [inputAmount, setInputAmount] = React.useState(1);
 
   function handleOnChange(event) {
     if (/^\d*$/.test(event.target.value)) {
@@ -47,17 +48,17 @@ const StreetDialog = ({
               {/* if there is a button in form, it will close the modal */}
               <button
                 className="btn flex-1"
-                onClick={() => handleBuyCandy(inputAmount)}
+                onClick={() => handleBuyCandy(candy, inputAmount)}
               >
                 Kaufen
               </button>
               <button
                 className="btn flex-1"
-                onClick={() => handleSellCandy(inputAmount)}
+                onClick={() => handleSellCandy(candy,inputAmount)}
               >
                 Verkaufen
               </button>
-              <button className="btn flex-0" onClick={() => setInputAmount(0)}>
+              <button className="btn flex-0" onClick={() => setInputAmount(1)}>
                 Abbrechen
               </button>
             </form>

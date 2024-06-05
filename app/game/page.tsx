@@ -7,6 +7,7 @@ import UserInput from "./UserInput/UserInput";
 import GameState, { initGameState } from "./game_state/GameState";
 import City from "./game_state/City";
 import Candy from "./enums/Candy";
+import { Statusbar } from "./Status/Statusbar";
 
 interface Props {
   candies: Candy[];
@@ -29,12 +30,60 @@ export default function Game({ candies, cities }: Props) {
     });
   }
 
-  function handleBuyCandy(amount: number) {
-    console.log("buying candy " + amount);
+  function updateInventoryCandy(
+    candy: Candy,
+    newAmount: number,
+    newCandyCoins: number
+  ) {
+    gameState.inventory.set(candy.name, newAmount);
+    setGameState({
+      ...gameState,
+      candyCoins: newCandyCoins,
+    });
   }
 
-  function handleSellCandy(amount: number) {
-    console.log("selling candy " + amount);
+  function handleBuyCandy(candy: Candy, amount: number) {
+    const currentAmount = gameState.inventory.get(candy.name);
+    amount = parseInt(amount); // Warum auch immer JS hier ein string bekommt?!!
+    const newAmount = currentAmount + amount;
+    const newTotalAmount = gameState.getTotalAmountCandies();
+
+    if (newTotalAmount > gameState.inventorySize) {
+      // TODO handle Inventar zu klein
+      return;
+    }
+
+    const price = gameState
+      .getCurrentCandies()
+      .filter((c) => c.name === candy.name)[0].price;
+
+    const newCandyCoins = gameState.candyCoins - price * amount;
+
+    if (newCandyCoins < 0) {
+      // TODO handle zu wenig Geld
+      return;
+    }
+
+    updateInventoryCandy(candy, newAmount, newCandyCoins);
+  }
+
+  function handleSellCandy(candy: Candy, amount: number) {
+    const currentAmount = gameState.inventory.get(candy.name);
+    amount = parseInt(amount); // Warum auch immer JS hier ein string bekommt?!!
+    const newTotalAmount = currentAmount - amount;
+
+    if (newTotalAmount < 0) {
+      // TODO handle nicht genug Süßigkeiten
+      return;
+    }
+
+    const price = gameState
+      .getCurrentCandies()
+      .filter((c) => c.name === candy.name)[0].price;
+
+    const newCandyCoins = gameState.candyCoins + price * amount;
+
+    updateInventoryCandy(candy, newTotalAmount, newCandyCoins);
   }
 
   return (
@@ -45,12 +94,17 @@ export default function Game({ candies, cities }: Props) {
           handleChangeState={handleChangeState}
         />
       </div>
-      <div>
-        <UserInput
-          gameState={gameState}
-          handleBuyCandy={handleBuyCandy}
-          handleSellCandy={handleSellCandy}
-        />
+      <div className="flex">
+        <div className="flex-1">
+          <UserInput
+            gameState={gameState}
+            handleBuyCandy={handleBuyCandy}
+            handleSellCandy={handleSellCandy}
+          />
+        </div>
+        <div className="flex-none">
+          <Statusbar gameState={gameState} />
+        </div>
       </div>
     </>
   );

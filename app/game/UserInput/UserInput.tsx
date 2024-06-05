@@ -4,12 +4,13 @@ import State from "../enums/State";
 import StreetItem from "./Street/StreetItem";
 import StreetDialog from "./Street/StreetDialog";
 import GameState from "../game_state/GameState";
+import Candy from "../enums/Candy";
 
 
 interface Props {
   gameState: GameState;
-  handleBuyCandy: (amount: number) => void;
-  handleSellCandy: (amount: number) => void;
+  handleBuyCandy: (candy: Candy, amount: number) => void;
+  handleSellCandy:(candy: Candy, amount: number) => void;
 }
 
 const UserInput = ({ gameState, handleBuyCandy, handleSellCandy }: Props) => {
