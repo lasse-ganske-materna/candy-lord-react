@@ -1,19 +1,20 @@
 "use client";
 
 import React from "react";
+import State from "../enums/State";
 
 interface Props {
-  item: string;
+  state: State;
   active: boolean;
-  handleChangeState: (newState: string) => void;
+  handleChangeState: (newState: State) => void;
 }
 
-const NavigationButton = ({ item, active, handleChangeState }: Props) => {
+const NavigationButton = ({ state, active, handleChangeState }: Props) => {
   const isActive = active ? "btn-active  glass btn-disabled" : "btn-neutral";
   const classes = "btn  flex-1 m-1 " + isActive;
   return (
-    <button className={classes} onClick={() => handleChangeState(item)}>
-      {item}
+    <button className={classes} onClick={() => handleChangeState(state)}>
+      {state}
     </button>
   );
 };

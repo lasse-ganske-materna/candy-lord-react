@@ -1,19 +1,19 @@
 import React, { useId } from "react";
 import NavigationButton from "./NavigationButton";
+import State from "../enums/State";
 
 interface Props {
-  items: string[];
-  activeItem: string;
-  handleChangeState: (newState: string) => void;
+  activeState: string;
+  handleChangeState: (newState: State) => void;
 }
 
 const NavigationBar = (props: Props) => {
-  const navItems = props.items.map((item) => {
-    const active = item === props.activeItem;
+  const navItems = Object.values(State).map((item) => {
+    const active = item === props.activeState;
     return (
       <NavigationButton
         key={item}
-        item={item}
+        state={item}
         active={active}
         handleChangeState={props.handleChangeState}
       />
