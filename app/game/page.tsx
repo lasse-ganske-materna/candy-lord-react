@@ -5,9 +5,10 @@ import NavigationBar from "./Navigation/NavigationBar";
 import State from "./enums/State";
 import UserInput from "./UserInput/UserInput";
 import GameState, { initGameState } from "./game_state/GameState";
-import City from "./game_state/City";
+import City, { getCityForName } from "./game_state/City";
 import Candy from "./enums/Candy";
 import { Statusbar } from "./Status/Statusbar";
+import { getTravelCost } from "./enums/TravelCosts";
 
 interface Props {
   candies: Candy[];
@@ -86,6 +87,25 @@ export default function Game({ candies, cities }: Props) {
     updateInventoryCandy(candy, newTotalAmount, newCandyCoins);
   }
 
+  function handleOnTravel(cityTargetName: string) {
+    const targetCity = getCityForName(cityTargetName);
+    const travelCost = getTravelCost(gameState.currentCity, targetCity);
+    const newCandyCoins = gameState.candyCoins - travelCost;
+
+    if (newCandyCoins < 0) {
+      // TODO handle zu wenig Geld
+      return;
+    }
+
+    setGameState({
+      ...gameState,
+      currentCity: targetCity,
+      candyCoins: newCandyCoins,
+    });
+
+    handleChangeState(State.Straße);
+  }
+
   return (
     <>
       <div>
@@ -100,6 +120,7 @@ export default function Game({ candies, cities }: Props) {
             gameState={gameState}
             handleBuyCandy={handleBuyCandy}
             handleSellCandy={handleSellCandy}
+            handleOnTravel={handleOnTravel}
           />
         </div>
         <div className="flex-none">

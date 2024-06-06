@@ -23,3 +23,7 @@ export function loadCities(candies: Candy[]): City[] {
     };
   });
 }
+
+export function getCityForName(name: string): City {
+  return initCities.find((c) => c.name === name);
+}

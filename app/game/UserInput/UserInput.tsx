@@ -5,15 +5,22 @@ import StreetItem from "./Street/StreetItem";
 import StreetDialog from "./Street/StreetDialog";
 import GameState from "../game_state/GameState";
 import Candy from "../enums/Candy";
-
+import TravelItem from "./Travel/TravelItem";
+import City from "../game_state/City";
 
 interface Props {
   gameState: GameState;
   handleBuyCandy: (candy: Candy, amount: number) => void;
-  handleSellCandy:(candy: Candy, amount: number) => void;
+  handleSellCandy: (candy: Candy, amount: number) => void;
+  handleOnTravel: (cityTargetName: string) => void;
 }
 
-const UserInput = ({ gameState, handleBuyCandy, handleSellCandy }: Props) => {
+const UserInput = ({
+  gameState,
+  handleBuyCandy,
+  handleSellCandy,
+  handleOnTravel,
+}: Props) => {
   switch (gameState.activeState) {
     case State.Straße:
       const streetItems = gameState.getCurrentCandies().map((candy) => {
@@ -32,7 +39,11 @@ const UserInput = ({ gameState, handleBuyCandy, handleSellCandy }: Props) => {
       });
       return <div className="grid grid-cols-3 gap-3">{streetItems}</div>;
     case State.Reisen:
-      return <div>Reisen</div>;
+      return (
+        <div className="flex justify-center items-center ">
+          <TravelItem gameState={gameState} handleOnTravel={handleOnTravel} />{" "}
+        </div>
+      );
     case State.Bank:
       return <div>Bank</div>;
     case State.ChaosCandyClub:

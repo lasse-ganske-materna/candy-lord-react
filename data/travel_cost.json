@@ -1,0 +1,74 @@
+{
+  "Dämmerstern": {
+    "Einsamkeit": 375,
+    "Falkenring": 150,
+    "Markarth": 75,
+    "Morthal": 125,
+    "Rifton": 175,
+    "Windhelm": 225,
+    "Winterfeste": 300
+  },
+  "Einsamkeit": {
+    "Dämmerstern": 375,
+    "Falkenring": 200,
+    "Markarth": 125,
+    "Morthal": 300,
+    "Rifton": 150,
+    "Windhelm": 75,
+    "Winterfeste": 225
+  },
+  "Falkenring": {
+    "Dämmerstern": 150,
+    "Einsamkeit": 200,
+    "Markarth": 225,
+    "Morthal": 75,
+    "Rifton": 125,
+    "Windhelm": 300,
+    "Winterfeste": 375
+  },
+  "Markarth": {
+    "Dämmerstern": 75,
+    "Einsamkeit": 125,
+    "Falkenring": 225,
+    "Morthal": 375,
+    "Rifton": 300,
+    "Windhelm": 200,
+    "Winterfeste": 375
+  },
+  "Morthal": {
+    "Dämmerstern": 125,
+    "Einsamkeit": 300,
+    "Falkenring": 75,
+    "Markarth": 375,
+    "Rifton": 200,
+    "Windhelm": 150,
+    "Winterfeste": 225
+  },
+  "Rifton": {
+    "Dämmerstern": 175,
+    "Einsamkeit": 150,
+    "Falkenring": 125,
+    "Markarth": 300,
+    "Morthal": 200,
+    "Windhelm": 375,
+    "Winterfeste": 75
+  },
+  "Windhelm": {
+    "Dämmerstern": 225,
+    "Einsamkeit": 75,
+    "Falkenring": 300,
+    "Markarth": 200,
+    "Morthal": 150,
+    "Rifton": 375,
+    "Winterfeste": 175
+  },
+  "Winterfeste": {
+    "Dämmerstern": 300,
+    "Einsamkeit": 225,
+    "Falkenring": 375,
+    "Markarth": 375,
+    "Morthal": 225,
+    "Rifton": 75,
+    "Windhelm": 175
+  }
+}

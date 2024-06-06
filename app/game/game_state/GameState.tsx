@@ -5,9 +5,9 @@ import City from "./City";
 export default interface GameState {
   activeState: State;
   initCandies: Candy[];
+  currentCandies: Candy[];
   initCities: City[];
   currentCity: City;
-  getCurrentCandies(): Candy[];
   inventory: Map<string, number>;
   candyCoins: number;
   inventorySize: number;
@@ -15,6 +15,8 @@ export default interface GameState {
   healthPoints: number;
   currentDate: Date;
   getTotalAmountCandies(): number;
+  getCurrentCandies(): Candy[];
+  calcDailyCandyPrices(): void;
 }
 
 interface Props {
@@ -36,11 +38,12 @@ export function initGameState({
   return {
     initCities: cities,
     initCandies: candies,
+    currentCandies: candies,
     activeState: State.Straße,
     currentCity: currentCity,
     getCurrentCandies() {
       //TODO könnte man auslagern, damit es nicht immer neu berechnet werden muss
-      const cityCandies = this.initCandies.map((candy) => {
+      const cityCandies = this.currentCandies.map((candy) => {
         let price = candy.price;
         if (this.currentCity.candyDecreased.name === candy.name) {
           price = Math.ceil(price * 0.75);
@@ -57,11 +60,18 @@ export function initGameState({
     currentDate: new Date(),
     initHealthPoints: 100,
     healthPoints: 100,
-    getTotalAmountCandies()  {
-     return Array.from(inventory.values()).reduce(
+    getTotalAmountCandies() {
+      return Array.from(inventory.values()).reduce(
         (sum, value) => sum + value,
         0
       );
-    }
+    },
+    calcDailyCandyPrices() {
+      this.currentCandies = this.initCandies.map((candy) => {
+        const randomFactor = 0.8 + Math.random() * 0.4;
+        const newPrice = Math.ceil(candy.price * randomFactor);
+        return { ...candy, price: newPrice };
+      });
+    },
   };
 }
